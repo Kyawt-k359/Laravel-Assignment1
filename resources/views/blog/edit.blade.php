@@ -20,7 +20,7 @@
               <input type="text" class="form-control" id="exampleInputEmail1" name="name" value="{{ $blog->name }}">
 
               @if($errors->has('name'))
-                <div class="error text-danger">
+                <div class="error text-waring">
                     {{ $errors->first('name') }}
                 </div>
               @endif
