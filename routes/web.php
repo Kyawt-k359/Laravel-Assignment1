@@ -3,9 +3,12 @@
 use App\Http\Controllers\BlogController;
 use Illuminate\Support\Facades\Route;
 //use App\Http\Controllers\BlogController;
-use App\Http\Controllers\BlogsController;
+// use App\Http\Controllers\BlogsController;
 
 use App\Http\Controllers\PostsController;
+
+use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +31,7 @@ Route::get('/', function () {
 
 // Route::get('/blog',[BlogController::class,'get']);
 
-Route::resource('blogs',BlogsController::class);
+// Route::resource('blogs',BlogsController::class);
 
 Route::resource('post',PostsController::class);
 
@@ -40,3 +43,13 @@ Route::post('blog\update\{blog}',[BlogController::class,'update'])->name('blog.u
 Route::get('blog\show\{blog}',[BlogController::class,'show'])->name('blog.show');
 Route::post('blog\destroy\{blog}',[BlogController::class,'destroy'])->name('blog.destroy');
 
+Route::get('admin',[AdminController::class,'index'])->name('admin');
+Route::get('admin/widget',[AdminController::class,'widget'])->name('admin.widget');
+
+
+
+
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

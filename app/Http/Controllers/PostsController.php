@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
+
 use Illuminate\Http\Request;
 
 use App\Models\Post;
@@ -17,7 +19,7 @@ class PostsController extends Controller
     {
        $posts=Post::all();
     
-       return view('post.index',compact('posts'));
+       return view('backend.post.index',compact('posts'));
     }
 
     /**
@@ -27,7 +29,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        return view('backend.post.create');
     }
 
     /**
@@ -36,15 +38,25 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-      
-       Post::create([
-        'title' => $request->title,
-        'description' => $request->description,
-        'is_active' => $request->has("is_active") ? 1 : 0
-    ]);
+       
+    //     Post::create([
+    //     'title' => $request->title,
+    //     'description' => $request->description,
+    //     'is_active' => $request->has("is_active") ? 1 : 0
+    // ]);
+
     //Post::create($request->all());
+
+    $data=$request->validated();
+
+    Post::create([
+
+        'title' => $data['title'],
+        'description' => $data['description'],
+        'is_active' => $request->has('is_active') ? 1 : 0
+    ]);
 
        return redirect()->route('post.index');
     }
@@ -59,7 +71,7 @@ class PostsController extends Controller
     {
         $result=Post::where('id',$id)->first();
         //dd($result);
-        return view('post.show',compact('result'));
+        return view('backend.post.show',compact('result'));
     }
 
     /**
@@ -72,7 +84,7 @@ class PostsController extends Controller
     {
         $posts=Post::where('id',$id)->first();
 
-        return view('post.edit',compact('posts'));
+        return view('backend.post.edit',compact('posts'));
 
     }
 
@@ -83,7 +95,7 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
         $posts=Post::where('id',$id)->first();
 
@@ -92,6 +104,16 @@ class PostsController extends Controller
             'description' => $request->description,
             'is_active' => $request->has(key:'is_active') ? 1 : 0
         ]);
+        // $data=$request->validated();
+
+
+
+        // Post::update([
+        //     'title' => $data['title'],
+        //     'description' => $data['description'],
+        //     'is_active' => $request->has('is_active') ? 1 : 0
+        // ]);
+
         return redirect()->route('post.index');
     }
 

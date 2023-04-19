@@ -9,12 +9,12 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     public function index(){
-        $data=Blog::all();
-        return view('blog.index',compact('data'));
+        $data=Blog::paginate(3);
+        return view('backend.blog.index',compact('data'));
     }
 
     public function create(){
-        return view('blog.create');
+        return view('backend.blog.create');
     }
 
     public function store(BlogRequest $request){
@@ -27,7 +27,7 @@ class BlogController extends Controller
     }
 
     public function edit(Blog $blog){
-       return view('blog.edit',compact('blog'));
+       return view('backend.blog.edit',compact('blog'));
     }
 
     public function update(BlogRequest $request,Blog $blog){
@@ -39,7 +39,7 @@ class BlogController extends Controller
     }
 
     public function show(Blog $blog){
-      return view('blog.show',compact('blog'));
+      return view('backend.blog.show',compact('blog'));
     }
 
     public function destroy(Blog $blog){

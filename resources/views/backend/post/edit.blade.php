@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Edit Posts</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" />
-</head>
-<body class="antialiased bg-secondary">
+@extends('backend.layout.master')
+@section('content')
+
 <div class="mx-auto mt-4" style="width: 500px">
     <h1 class="text-center mb-4">Edit Posts</h1>
 <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
@@ -32,13 +25,12 @@
 
     </div>
     <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Update</button>
-    <a href="{{ route('post.index') }}" class="btn btn-primary ms-2" >Cancel</a>
+        <button type="submit" class="btn btn-primary mr-4">Update</button>
+    <a href="{{ route('post.index') }}" class="btn btn-primary" >Cancel</a>
     </div>
     
 
   </form>
 </div>
 </div>
-</body>
-</html>
+@endsection
