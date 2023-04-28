@@ -11,6 +11,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Image</th>
                         <th>Action</th>
                         
                       </tr>
@@ -21,6 +22,10 @@
                              <td>{{ $blog->id}}</td>
                              <td>{{ $blog->name}}</td>
                              <td>{{ $blog->description}}</td>
+                             <td> @if ($blog->image)
+                                     <img src="{{ asset('storage/blog_image/' . $blog->image) }}" alt="Blog Image" style="width: 100px">
+                                   @endif
+                              </td>
                              <td>
                                 <a href="{{ route('blog.edit',$blog->id)}}" class="btn btn-primary">Edit</a>
                                 <a href="{{ route('blog.destroy',$blog->id)}}" class="btn btn-danger">Delete</a>

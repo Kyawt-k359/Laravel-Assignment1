@@ -28,6 +28,11 @@
   <link rel="stylesheet" href={{asset('css/daterangepicker.css')}}>
   <!-- summernote -->
   <link rel="stylesheet" href={{asset('css/summernote-bs4.min.css')}}>
+
+  <link rel="stylesheet" href="{{ asset('css/dataTables.bootstrap4.min.css') }}">
+   <link rel="stylesheet" href="{{ asset('css/responsive.bootstrap4.min.css') }}">
+
+ 
 </head>
 <body class="hold-transition sidebar-mini layout-fixed  ">
 <div class="wrapper">
@@ -74,7 +79,7 @@
             </div>
           </form>
         </div>
-      </li>
+        </li>
 
       <!-- Messages Dropdown Menu -->
       <li class="nav-item dropdown">
@@ -172,6 +177,41 @@
         </a>
       </li>
     </ul>
+    {{-- Login and Logout oflayout of app.blade.php  --}}
+    <ul class="navbar-nav ms-auto">
+      <!-- Authentication Links -->
+      @guest
+          @if (Route::has('login'))
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+              </li>
+          @endif
+
+          @if (Route::has('register'))
+              <li class="nav-item">
+                  <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+              </li>
+          @endif
+      @else
+          <li class="nav-item dropdown">
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                  {{ Auth::user()->name }}
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{{ route('logout') }}"
+                     onclick="event.preventDefault();
+                                   document.getElementById('logout-form').submit();">
+                      {{ __('Logout') }}
+                  </a>
+
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                      @csrf
+                  </form>
+              </div>
+          </li>
+      @endguest
+  </ul>
   </nav>
   <!-- /.navbar -->
 
@@ -202,51 +242,102 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
+               @can('dashboard')
+               <li class="nav-item menu-open">
             
-            <a href={{route('admin')}} class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-           
+                <a href={{route('admin')}} class="nav-link active">
+                  <i class="nav-icon fas fa-tachometer-alt"></i>
+                  <p>
+                    Dashboard
+                    <i class="right fas fa-angle-left"></i>
+                  </p>
+                </a>
+              </li>
+               @endcan
+          
+         @can('widget')
+         <li class="nav-item">
+          <a href={{route('admin.widget')}} class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Widgets
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+         @endcan
+          
+         @can('blogList')
+         <li class="nav-item">
+          <a href={{ route('blog.index') }}  class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Blog
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+         @endcan
          
-          <li class="nav-item">
-            <a href={{route('admin.widget')}} class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href={{ route('blog.index') }}  class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Blog
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href={{ route('post.index') }}  class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Post
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li>
-          </li>
-        </ul>
-      </nav>
+         @can('postList')
+         <li class="nav-item">
+          <a href={{ route('post.index') }}  class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>
+              Post
+              <span class="right badge badge-danger">New</span>
+            </p>
+          </a>
+        </li>
+         @endcan
+
+        @can('Authentication')
+        <li class="nav-item">
+          <a href="#" class="nav-link">
+            <i class='fas fa-user-lock' ></i>
+            <p>
+              Authentication
+              <i class="fas fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            @can('roleList')
+            <li class="nav-item">
+              <a href={{ route('role.index') }} class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Role List</p>
+              </a>
+            </li>
+            @endcan
+            
+            @can('permissionList')
+            <li class="nav-item">
+              <a href={{route('permission.index')}} class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Permission List</p>
+              </a>
+            </li>
+            @endcan
+            
+            @can('userList')
+            <li class="nav-item">
+              <a href={{ route('user.index') }} class="nav-link">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Admin List</p>
+              </a>
+            </li>
+            @endcan
+            </ul>
+        </li>
+        @endcan
+         
+         
+    </ul>
+  </nav>
       <!-- /.sidebar-menu -->
-    </div>
+  </div>
     <!-- /.sidebar -->
-  </aside>
+</aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -302,6 +393,25 @@
 <!-- AdminLTE for demo purposes -->
 <script src={{asset('js/demo.js')}}></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src={{asset('js/dashboard.js')}}></script>
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('js/responsive.bootstrap4.min.js') }}"></script>
+
+<script>
+  $(function() {
+      $('#example1').DataTable();
+      $('#example2').DataTable();
+  });
+</script>
+
+{{-- <script>
+  $(document).ready(function(){
+    var table=$('#example1').DataTable({
+      responsive:true,processing:true,severSide:true,autoWidth:false
+    })
+  })
+</script> --}}
 </body>
 </html>

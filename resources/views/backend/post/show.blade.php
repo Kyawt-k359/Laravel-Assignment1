@@ -9,6 +9,7 @@
                         <th scope="col">ID</th>
                         <th scope="col">Name</th>
                         <th scope="col">Description</th>
+                        <th scope="col">Image</th>
                         <th scope="col">is-active</th>
                         {{-- <th scope="col">Action</th> --}}
                       </tr>
@@ -20,6 +21,7 @@
                              <td class="align-middle">{{ $result->id}}</td>
                              <td class="align-middle">{{ $result->title}}</td>
                              <td class="align-middle">{{ $result->description}}</td>
+                             <td class="align-middle"><img src="{{ asset('post_image/' . $result->image) }}" alt="{{ $result->title }}" style="width:100px"></td>
                              <td class="align-middle"> {{ ((bool) $result->is_active ) ? "active" : "not active" }}</td>
                              {{-- <td>
                                 <div class="d-flex flex-row bd-highlight">

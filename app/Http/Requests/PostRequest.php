@@ -26,6 +26,8 @@ class PostRequest extends FormRequest
         return [
             'title'=>'required',
             'description'=>'required',
+            'author_id' =>'required |integer',
+            'image' => 'image|mimes:jpeg,png,jpg',
             'is_active' => ''
         ];
     }

@@ -17,7 +17,7 @@ class BlogsController extends Controller
     {
         $data=Blog::all();
 
-        return view('blog.index',compact('data'));
+        return view('blogs.index',compact('data'));
     }
 
     /**
@@ -27,7 +27,7 @@ class BlogsController extends Controller
      */
     public function create()
     {
-        return view('blog.create');
+        return view('blogs.create');
     }
 
     /**
@@ -47,7 +47,7 @@ class BlogsController extends Controller
         // return redirect()->route('blog.index');
 
         Blog::create($request->all());// input ka name nae database column ka name tu yin one line nae  pae htoke loh ya
-        return redirect()->route('blog.index');
+        return redirect()->route('blogs.index');
     }
 
     /**
@@ -60,7 +60,7 @@ class BlogsController extends Controller
     {
         $result=Blog::where('id',$id)->first();
         //dd($result);
-        return view('blog.show',compact('result'));
+        return view('blogs.show',compact('result'));
     }
 
     /**
@@ -73,7 +73,7 @@ class BlogsController extends Controller
     {
         $data=Blog::where('id',$id)->first();
 
-        return view('blog.edit',compact('data'));
+        return view('blogs.edit',compact('data'));
     }
 
     /**
@@ -85,6 +85,12 @@ class BlogsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = $request->validate([
+            'name'=> 'required',
+            'email' => 'required',
+            'password' => 'required',
+            'select'=> 'required',
+        ]);
         $data=Blog::where('id',$id)->first();
 
         $data->update([
@@ -93,7 +99,7 @@ class BlogsController extends Controller
 
         ]);
 
-        return redirect()->route('blog.index');
+        return redirect()->route('blogs.index');
     }
 
     /**
@@ -107,6 +113,6 @@ class BlogsController extends Controller
         $data=Blog::where('id',$id)->first();
         $data->delete();
 
-        return redirect()->route('blog.index');
+        return redirect()->route('blogs.index');
     }
 }

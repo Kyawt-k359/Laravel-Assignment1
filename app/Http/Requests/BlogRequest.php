@@ -26,7 +26,8 @@ class BlogRequest extends FormRequest
     {
         return [
             'name'=> 'required',
-            'description' => 'required'
+            'description' => 'required',
+            'image' => 'image|mimes:jpeg,png,jpg',
         ];
     }
 }
